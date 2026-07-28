@@ -1,0 +1,67 @@
+<!-- admin.html -->
+<!-- Transport department page: add new buses and see today's live status for all buses -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bus Crowd Predictor - Transport Admin</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <div class="app-card-wide">
+        <div class="top-nav">
+            <a href="/admin">Admin Dashboard</a>
+            <a href="/logout">Logout</a>
+        </div>
+
+        <h2>Transport Department Dashboard</h2>
+        <p>Logged in as <strong>{{ username }}</strong></p>
+
+        <!-- Form to add a new bus route -->
+        <h5>Add a New Bus</h5>
+        <form action="/admin" method="POST" class="row g-2 mb-4">
+            <div class="col-md-3">
+                <input type="text" class="form-control" name="bus_number" placeholder="Bus Number" required>
+            </div>
+            <div class="col-md-4">
+                <input type="text" class="form-control" name="route_name" placeholder="Route Name" required>
+            </div>
+            <div class="col-md-2">
+                <input type="number" class="form-control" name="total_seats" placeholder="Total Seats" value="55" required>
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-primary w-100">Add Bus</button>
+            </div>
+        </form>
+
+        <!-- Live summary of every bus -->
+        <h5>Today's Bus Status</h5>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Bus</th>
+                    <th>Route</th>
+                    <th>Total Seats</th>
+                    <th>Occupied</th>
+                    <th>Available</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for bus in bus_summary %}
+                <tr>
+                    <td>{{ bus.bus_number }}</td>
+                    <td>{{ bus.route_name }}</td>
+                    <td>{{ bus.total_seats }}</td>
+                    <td>{{ bus.occupied }}</td>
+                    <td>{{ bus.available }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
